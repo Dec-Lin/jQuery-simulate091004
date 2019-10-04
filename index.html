@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jQuery</title>
+</head>
+
+<body>
+    <div id="div1">Hello</div>
+    <div id="div2">Hello</div>
+    <div id="div3">Hello</div>
+</body>
+<script>
+    window.jQuery = function (nodeOrSelector) {
+        let nodes = {}
+        if (typeof nodeOrSelector === 'string') {
+            let temp = document.querySelectorAll(nodeOrSelector)
+            for (let i = 0; i < temp.length; i++) {
+                nodes[i] = temp[i]
+            }
+            nodes.length = temp.length
+        } else if (nodeOrSelector instanceof Node) {
+            nodes = {
+                0: nodeOrSelector,
+                length: 1
+            }
+        }
+
+
+        nodes.addClass = function (classes) {
+            if (typeof classes === 'string') {
+                let temp = classes
+                classes = Array(temp)
+            }
+            classes.forEach((value) => {
+                for (let i = 0; i < nodes.length; i++) {
+                    nodes[i].classList.add(value)
+                }
+            })
+        }
+        nodes.setText = function (text) {
+            for (let i = 0; i < nodes.length; i++) {
+                nodes[i].textContent = text
+            }
+        }
+        return nodes
+    }
+    window.$ = jQuery
+    let $div = $('div')
+    $div.addClass('red') // 可将所有 div 的 class 添加一个 red
+    $div.setText('hi') // 可将所有 div 的 textContent 变为 hi
+</script>
+
+</html>
